@@ -1,4 +1,17 @@
 # Tiny Slider 2
+
+### Fork of tiny slider - changes
+
+add this fix for HierarchyRequestError
+https://github.com/AmaraLiving/tiny-slider/pull/1/commits/7f62fc143a565b667054b34fc93c15c6d7d27c9b
+
+add a fix for child label input ids on cloning
+`<input type="checkbox" data-mod-id id="myId-1" />`
+`<label data-mod-id for="myId-1">click me</label>`
+adding `data-mod-id` will ensure that the id is changed when the slide is cloned numerous times on initialization.  this ensures ids remain unique on the page
+
+added a .nvmrc file for node version
+
 [![](https://data.jsdelivr.com/v1/package/npm/tiny-slider/badge?style=rounded)](https://www.jsdelivr.com/package/npm/tiny-slider)
 ![version](https://img.shields.io/badge/Version-2.9.3-green.svg)
 

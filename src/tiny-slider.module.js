@@ -545,7 +545,11 @@ export var tns = function(options) {
     rect = div.getBoundingClientRect();
     width = rect.right - rect.left;
     div.remove();
-    return width || getClientWidth(el.parentNode);
+    if (width) {
+      return width;
+    } else if (el.parentNode.parentNode !== null) {
+      return getClientWidth(el.parentNode);
+    }
   }
 
   function getViewportWidth () {
@@ -678,6 +682,16 @@ export var tns = function(options) {
     return getCSSPrefix(ANIMATIONDURATION, 17) + 'animation-duration:' + speed / 1000 + 's;';
   }
 
+  function checkReplaceModIds (node) {
+    var check = node.querySelector('input[data-mod-id]');
+    var label = node.querySelector('label[data-mod-id]');
+    if (check && label) {
+      var newId = check.id + '-' + Math.floor(Math.random() * 10000);
+      setAttrs(check, {'id': newId});
+      setAttrs(label, {'for': newId});
+    }
+  }
+
   function initStructure () {
     var classOuter = 'tns-outer',
         classInner = 'tns-inner',
@@ -740,12 +754,18 @@ export var tns = function(options) {
             cloneFirst = slideItems[num].cloneNode(true);
         addClass(cloneFirst, slideClonedClass);
         removeAttrs(cloneFirst, 'id');
+
+        // search for checkboxes and update
+        checkReplaceModIds(cloneFirst)
+
         fragmentAfter.insertBefore(cloneFirst, fragmentAfter.firstChild);
 
         if (carousel) {
           var cloneLast = slideItems[slideCount - 1 - num].cloneNode(true);
           addClass(cloneLast, slideClonedClass);
           removeAttrs(cloneLast, 'id');
+          checkReplaceModIds(cloneLast)
+
           fragmentBefore.appendChild(cloneLast);
         }
       }

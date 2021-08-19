@@ -8,6 +8,7 @@
 *.log
 /*.html
 *.sketch
+.idea
 
 /.codekit-cache/
 /bower_components/
